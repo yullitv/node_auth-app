@@ -7,7 +7,7 @@ const authRouter = new express.Router();
 authRouter.post('/registration', catchError(authController.register));
 
 authRouter.get(
-  './activation/:activationToken',
+  '/activation/:activationToken',
   catchError(authController.activate),
 );
 

@@ -1,4 +1,4 @@
-const { bcrypt } = require('bcrypt');
+const bcrypt = require('bcrypt');
 const { User } = require('../models/user.model.js');
 const { userService } = require('../services/user.service.js');
 const { jwtService } = require('../services/jwt.service.js');
@@ -30,7 +30,7 @@ const validatePassword = (password) => {
     return 'Password is required';
   }
 
-  if (password.lenght < 6) {
+  if (password.length < 6) {
     return 'At least 6 characters required';
   }
 };
@@ -73,7 +73,7 @@ const generateTokens = async (res, user) => {
   const normalizedUser = userService.normalize(user);
 
   const accessToken = jwtService.sign(normalizedUser);
-  const refreshAccessToken = jwtService.singRefresh(normalizedUser);
+  const refreshAccessToken = jwtService.signRefresh(normalizedUser);
 
   await tokenService.save(normalizedUser.id, refreshAccessToken);
 
@@ -124,7 +124,7 @@ const logout = async (req, res) => {
   const { refreshToken } = req.cookies;
   const user = await jwtService.verifyRefresh(refreshToken);
 
-  if (!user || !refreshToken) {
+  if (!user) {
     throw ApiError.unauthorized('Invalid token');
   }
 
